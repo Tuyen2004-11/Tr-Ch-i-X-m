@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>🎯 Trò chơi đoán số 🎯</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #74b9ff, #a29bfe);
+      color: #fff;
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 18px;
+      width: 80px;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #0984e3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #74b9ff;
+    }
+
+    #ketqua {
+      font-size: 22px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    #diem {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+
+    .correct {
+      color: #00ff88;
+      animation: zoom 0.4s ease;
+    }
+
+    .wrong {
+      color: #ff7675;
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    @keyframes zoom {
+      0% { transform: scale(0.9); }
+      100% { transform: scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎲 Trò chơi đoán số 🎲</h1>
+  <p>Mình đang nghĩ một số từ <b>1 đến 10</b>. Bạn đoán thử xem!</p>
+
+  <input type="number" id="guess" placeholder="Số?">
+  <button onclick="kiemTra()">Đoán!</button>
+  <button onclick="choiLai()">🔁 Chơi lại</button>
+
+  <p id="ketqua"></p>
+  <p id="diem">Điểm: <span id="score">0</span></p>
+
+  <script>
+    let soBiMat = Math.floor(Math.random() * 10) + 1;
+    let diem = 0;
+
+    function kiemTra() {
+      let soNguoiChoi = Number(document.getElementById("guess").value);
+      let ketQua = document.getElementById("ketqua");
+      let hienDiem = document.getElementById("score");
+
+      if (!soNguoiChoi) {
+        ketQua.innerHTML = "⚠️ Vui lòng nhập số!";
+        ketQua.className = "wrong";
+        return;
+      }
+
+      if (soNguoiChoi === soBiMat) {
+        ketQua.innerHTML = "🎉 Chính xác! Bạn thật giỏi!";
+        ketQua.className = "correct";
+        diem++;
+        hienDiem.textContent = diem;
+        soBiMat = Math.floor(Math.random() * 10) + 1; // Tạo số mới sau khi đúng
+      } else if (soNguoiChoi > soBiMat) {
+        ketQua.innerHTML = "😅 Hơi lớn rồi! Thử nhỏ hơn nhé!";
+        ketQua.className = "wrong";
+      } else {
+        ketQua.innerHTML = "😅 Hơi nhỏ rồi! Thử lớn hơn nhé!";
+        ketQua.className = "wrong";
+      }
+    }
+
+    function choiLai() {
+      soBiMat = Math.floor(Math.random() * 10) + 1;document.getElementById("guess").value = "";
+      document.getElementById("ketqua").innerHTML = "";
+    }
+  </script>
+</body>
+</html>
